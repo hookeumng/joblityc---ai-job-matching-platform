@@ -1,0 +1,533 @@
+html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Job AI — Вакансии</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            color: #222;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .filters {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .filters-row {
+            display: flex;
+            gap: 12px;
+            align-items: end;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-group label {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .filter-group input {
+            width: 220px;
+            padding: 11px 13px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .filter-group input:focus {
+            border-color: #222;
+        }
+
+        .filter-button {
+            padding: 11px 18px;
+            border: none;
+            border-radius: 8px;
+            background: #222;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .filter-button:hover {
+            background: #444;
+        }
+
+        .reset-button {
+            padding: 11px 15px;
+            color: #555;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .vacancy {
+            background: white;
+            padding: 26px;
+            margin-bottom: 18px;
+            border-radius: 14px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .vacancy:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
+        }
+
+        .vacancy h2 {
+            margin: 0 0 8px;
+            font-size: 22px;
+        }
+
+        .company {
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .salary {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .info-item {
+            background: #f5f7fa;
+            padding: 7px 11px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .skills {
+            margin-bottom: 18px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .skill {
+            background: #222;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 7px;
+            font-size: 12px;
+        }
+
+        .match {
+            margin-bottom: 20px;
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .match-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .match-progress {
+            height: 100%;
+            background: #222;
+            border-radius: 10px;
+        }
+
+        .description {
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 17px;
+            background: #222;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .button:hover {
+            background: #444;
+        }
+    </style>
+</head>
+
+<body>
+
+<header style="
+    background: #222;
+    color: white;
+    padding: 18px 40px;
+    margin: -40px -40px 40px -40px;
+">
+    <div style="
+        max-width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    ">
+        <div style="
+            font-size: 24px;
+            font-weight: bold;
+        ">
+            Job AI
+        </div>
+
+        <div style="
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        ">
+            <div style="
+                font-size: 14px;
+                opacity: 0.8;
+            ">
+                Умный поиск вакансий
+            </div>
+
+            <a
+                href="{% url 'about' %}"
+                style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 14px;
+                "
+            >
+                О проекте
+            </a>
+
+            <a
+                href="{% url 'profile' %}"
+                style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 14px;
+                "
+            >
+                Мой профиль
+            </a>
+            {% if user.is_authenticated %}
+
+            <span style="
+                color: white;
+                font-size: 14px;
+                opacity: 0.8;
+            ">
+                {{ user.username }}
+            </span>
+
+            <a
+                href="{% url 'logout' %}"
+                style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 14px;
+                "
+            >
+                Выйти
+            </a>
+
+        {% else %}
+
+            <a
+                href="{% url 'login' %}"
+                style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 14px;
+                "
+            >
+                Войти
+            </a>
+
+            <a
+                href="{% url 'register' %}"
+                style="
+                    color: white;
+                    text-decoration: none;
+                    font-size: 14px;
+                "
+            >
+                Регистрация
+            </a>
+
+        {% endif %}
+        </div>
+    </div>
+</header>
+
+<div class="container">
+
+    <h1>Вакансии</h1>
+
+    {% if updated %}
+        <div style="
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        ">
+            ✓ Вакансии успешно обновлены
+        </div>
+    {% endif %}
+
+    <p style="color: #666; margin-bottom: 25px;">
+        Найдено вакансий: {{ vacancies|length }}
+    </p>
+
+    <form method="get" class="filters">
+
+        <div class="filters-row">
+
+            <div class="filter-group">
+                <label for="min_salary">
+                    Минимальная зарплата
+                </label>
+
+                <input
+                    type="number"
+                    id="min_salary"
+                    name="min_salary"
+                    value="{{ min_salary }}"
+                    placeholder="Например, 150000"
+                >
+            </div>
+
+            <div class="filter-group">
+                <label for="skill">
+                    Навыки
+                </label>
+
+                <input
+                    type="text"
+                    id="skill"
+                    name="skill"
+                    value="{{ skill }}"
+                    placeholder="Python, Django, PostgreSQL"
+                >
+            </div>
+
+            <button class="filter-button" type="submit">
+                Найти вакансии
+            </button>
+
+            <a
+                class="reset-button"
+                href="{% url 'update_vacancies' %}"
+            >
+                ↻ Обновить вакансии
+            </a>
+
+            <a
+                class="reset-button"
+                href="/vacancies/"
+            >
+                Сбросить
+            </a>
+
+        </div>
+
+    </form>
+
+    {% for vacancy in vacancies %}
+
+        <div class="vacancy">
+
+            <h2>{{ vacancy.title }}</h2>
+
+            <div class="company">
+                {{ vacancy.company }}
+            </div>
+
+            <div class="salary">
+
+                {% if vacancy.salary_from and vacancy.salary_to %}
+
+                    {{ vacancy.salary_from_display }}
+                    —
+                    {{ vacancy.salary_to_display }}
+
+                    {% if vacancy.currency == "RUR" %}
+                        ₽
+                    {% else %}
+                        {{ vacancy.currency }}
+                    {% endif %}
+
+                {% elif vacancy.salary_from %}
+
+                    от {{ vacancy.salary_from_display }}
+
+                    {% if vacancy.currency == "RUR" %}
+                        ₽
+                    {% else %}
+                        {{ vacancy.currency }}
+                    {% endif %}
+
+                {% elif vacancy.salary_to %}
+
+                    до {{ vacancy.salary_to_display }}
+
+                    {% if vacancy.currency == "RUR" %}
+                        ₽
+                    {% else %}
+                        {{ vacancy.currency }}
+                    {% endif %}
+
+                {% else %}
+
+                    Зарплата не указана
+
+                {% endif %}
+
+            </div>
+
+            <div class="info-row">
+
+                {% if vacancy.city %}
+                    <div class="info-item">
+                        📍 {{ vacancy.city }}
+                    </div>
+                {% endif %}
+
+                {% if vacancy.experience %}
+                    <div class="info-item">
+                        👨‍💻 {{ vacancy.experience }}
+                    </div>
+                {% endif %}
+
+                {% if vacancy.employment %}
+                    <div class="info-item">
+                        💼 {{ vacancy.employment }}
+                    </div>
+                {% endif %}
+
+                {% if vacancy.schedule %}
+                    <div class="info-item">
+                        📅 {{ vacancy.schedule }}
+                    </div>
+                {% endif %}
+
+                {% if vacancy.work_format %}
+                    <div class="info-item">
+                        🏢 {{ vacancy.work_format }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            {% if skill %}
+                <div class="match">
+
+                    <div class="match-header">
+                        <span>Соответствие навыкам</span>
+                        <span>{{ vacancy.match_score }}%</span>
+                    </div>
+
+                    <div class="match-bar">
+                        <div
+                            class="match-progress"
+                            style="width: {{ vacancy.match_score }}%;"
+                        ></div>
+                    </div>
+
+                </div>
+            {% endif %}
+
+            {% if vacancy.skills_list %}
+                <div class="skills">
+
+                    <div class="section-title">
+                        Навыки
+                    </div>
+
+                    <div class="skill-list">
+
+                        {% for skill_item in vacancy.skills_list %}
+                            <span class="skill">
+                                {{ skill_item }}
+                            </span>
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+            {% endif %}
+
+            <a
+                class="button"
+                href="{% url 'vacancy_detail' vacancy.id %}"
+            >
+                Подробнее
+            </a>
+
+        </div>
+
+    {% empty %}
+
+        <p>Вакансий пока нет.</p>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход — Job AI</title>
+</head>
+<body>
+
+    <h1>Вход в Job AI</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">
+            Войти
+        </button>
+    </form>
+
+    <p>
+        Нет аккаунта?
+        <a href="/vacancies/register/">
+            Зарегистрироваться
+        </a>
+    </p>
+
+</body>
+</html>
