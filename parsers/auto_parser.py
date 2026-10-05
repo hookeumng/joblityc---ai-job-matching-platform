@@ -2,13 +2,41 @@ from django.contrib.auth.models import User
 
 from parsers.sources.hh_search import HHSearchSource
 from parsers.sources.hh_page import HHPageSource
-from parsers.qwen_parser import QwenParser
+from parsers.yandex_parser import YandexParser
 
 from vacancies.services import (
     save_vacancy,
     save_recommendation,
 )
 
+
+def vacancy_matches_profile(
+    vacancy,
+    desired_position="",
+    user_skills="",
+):
+    title = (vacancy.title or "").lower().strip()
+
+    if desired_position:
+        position = desired_position.lower().strip()
+
+        if position == "учитель":
+            teaching_words = [
+                "учитель",
+                "преподаватель",
+                "педагог",
+                "репетитор",
+                "тьютор",
+                "эксперт егэ",
+            ]
+
+            if not any(
+                word in title
+                for word in teaching_words
+            ):
+                return False
+
+    return True
 
 def vacancy_matches_query(
     vacancy,
@@ -36,9 +64,15 @@ def process_one_vacancy(
     user_skills,
     min_salary,
     user,
+    desired_position="",
+    city="",
+    work_format="any",
+    employment="any",
+    experience="any",
+    wishes="",
 ):
     page_source = HHPageSource()
-    parser = QwenParser()
+    parser = YandexParser()
 
     print()
     print(
@@ -53,7 +87,7 @@ def process_one_vacancy(
         )
 
         print("Страница получена.")
-        print("Анализируем вакансию через Qwen...")
+        print("Анализируем вакансию через YandexGPT...")
 
         parsed = parser.parse_vacancy(
             text=text,
@@ -63,31 +97,44 @@ def process_one_vacancy(
         print(
             f"✓ Распознано: {parsed.title}"
         )
+        if not vacancy_matches_profile(
+            parsed,
+            desired_position=desired_position,
+            user_skills=user_skills,
+        ):
+            print("✗ Вакансия не прошла предварительный фильтр.")
+            return
 
-        print("Оцениваем соответствие профилю...")
+        print("Оцениваем соответствие через YandexGPT...")
 
-        match = parser.match_vacancy(
-            vacancy=parsed,
+        match_result = parser.match_vacancy(
+            parsed,
             user_skills=user_skills,
             min_salary=min_salary,
+            desired_position=desired_position,
+            city=city,
+            work_format=work_format,
+            employment=employment,
+            experience=experience,
+            wishes=wishes,
         )
 
-        parsed.match_score = match.get(
+        parsed.match_score = match_result.get(
             "score",
             0,
         )
 
-        parsed.matched_skills = match.get(
+        parsed.matched_skills = match_result.get(
             "matched_skills",
             [],
         )
 
-        parsed.missing_skills = match.get(
+        parsed.missing_skills = match_result.get(
             "missing_skills",
             [],
         )
 
-        parsed.match_reason = match.get(
+        parsed.match_reason = match_result.get(
             "reason",
             "",
         )
@@ -130,11 +177,17 @@ def process_one_vacancy(
 
 
 def find_and_parse_vacancies(
-    query: str,
-    user_skills: str,
-    min_salary: int | None = None,
-    limit: int = 20,
-    user: User | None = None,
+    query,
+    user_skills,
+    min_salary=None,
+    limit=20,
+    user=None,
+    desired_position="",
+    city="",
+    work_format="any",
+    employment="any",
+    experience="any",
+    wishes="",
 ):
     if user is None:
         raise ValueError(
@@ -166,10 +219,16 @@ def find_and_parse_vacancies(
 
     for vacancy in filtered_vacancies:
         result = process_one_vacancy(
-            vacancy=vacancy,
-            user_skills=user_skills,
-            min_salary=min_salary,
-            user=user,
+            vacancy,
+            user_skills,
+            min_salary,
+            user,
+            desired_position,
+            city,
+            work_format,
+            employment,
+            experience,
+            wishes,
         )
 
         if result is not None:

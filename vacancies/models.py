@@ -25,24 +25,78 @@ class Vacancy(models.Model):
         return self.title
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(
-    User,
-    on_delete=models.CASCADE,
-    related_name="profile",
-    null=True,
-)
+    WORK_FORMAT_CHOICES = [
+        ("any", "Любой"),
+        ("remote", "Удалённая работа"),
+        ("office", "Офис"),
+        ("hybrid", "Гибрид"),
+    ]
 
-    name = models.CharField(
-        max_length=100
+    EMPLOYMENT_CHOICES = [
+        ("any", "Любая"),
+        ("full", "Полная занятость"),
+        ("part", "Частичная занятость"),
+        ("project", "Проектная работа"),
+        ("internship", "Стажировка"),
+    ]
+
+    EXPERIENCE_CHOICES = [
+        ("any", "Любой"),
+        ("no_experience", "Без опыта"),
+        ("1_3", "1–3 года"),
+        ("3_6", "3–6 лет"),
+        ("6_plus", "6+ лет"),
+    ]
+
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name="profile",
+        null=True,
+    )
+
+    name = models.CharField(max_length=100)
+
+    desired_position = models.CharField(
+        max_length=255,
+        blank=True,
     )
 
     skills = models.TextField(
-        help_text="Введите навыки через запятую"
+        help_text="Введите навыки через запятую",
     )
 
     min_salary = models.PositiveIntegerField(
         null=True,
-        blank=True
+        blank=True,
+    )
+
+    city = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+
+    work_format = models.CharField(
+        max_length=20,
+        choices=WORK_FORMAT_CHOICES,
+        default="any",
+    )
+
+    employment = models.CharField(
+        max_length=20,
+        choices=EMPLOYMENT_CHOICES,
+        default="any",
+    )
+
+    experience = models.CharField(
+        max_length=20,
+        choices=EXPERIENCE_CHOICES,
+        default="any",
+    )
+
+    wishes = models.TextField(
+        blank=True,
+        help_text="Дополнительные пожелания к вакансии",
     )
 
     def __str__(self):

@@ -27,14 +27,14 @@ def vacancy_list(request):
         )
 
     recommendations = (
-        Recommendation.objects
+    Recommendation.objects
         .filter(
-            user=request.user
+            user=request.user,
+            score__gte=60,
         )
         .select_related("vacancy")
         .order_by("-score", "-created_at")
     )
-
     min_salary = request.GET.get(
         "min_salary"
     )
@@ -159,22 +159,47 @@ def profile_view(request):
     )
 
     if request.method == "POST":
-        profile.name = request.POST.get(
-            "name",
+        profile.name = request.POST.get("name", "").strip()
+        profile.desired_position = request.POST.get(
+            "desired_position",
             "",
         ).strip()
-
         profile.skills = request.POST.get(
             "skills",
             "",
         ).strip()
+        profile.city = request.POST.get(
+            "city",
+            "",
+        ).strip()
+        profile.work_format = request.POST.get(
+            "work_format",
+            "any",
+        )
+        profile.employment = request.POST.get(
+            "employment",
+            "any",
+        )
+        profile.experience = request.POST.get(
+            "experience",
+            "any",
+        )
+        profile.wishes = request.POST.get(
+            "wishes",
+            "",
+        ).strip()
+
+        min_salary = request.POST.get("min_salary", "").strip()
 
         profile.min_salary = (
-            request.POST.get("min_salary")
-            or None
+            int(min_salary)
+            if min_salary.isdigit()
+            else None
         )
 
         profile.save()
+
+        return redirect("/vacancies/profile/")
 
     return render(
         request,
@@ -191,21 +216,39 @@ def update_vacancies(request):
     ).first()
 
     if profile is None:
-        return redirect(
-            "/vacancies/profile/"
-        )
+        return redirect("/vacancies/profile/")
+    Recommendation.objects.filter(
+        user=request.user
+    ).delete()
+
+    search_parts = []
+
+    if profile.desired_position:
+        search_parts.append(profile.desired_position)
+
+    if profile.skills:
+        search_parts.append(profile.skills)
+
+    if profile.city:
+        search_parts.append(profile.city)
+
+    search_query = " ".join(search_parts)
 
     find_and_parse_vacancies(
-        query=profile.skills,
+        query=search_query,
         user_skills=profile.skills,
         min_salary=profile.min_salary,
-        limit=5,
+        limit=20,
         user=request.user,
+        desired_position=profile.desired_position,
+        city=profile.city,
+        work_format=profile.work_format,
+        employment=profile.employment,
+        experience=profile.experience,
+        wishes=profile.wishes,
     )
 
-    return redirect(
-        "/vacancies/?updated=1"
-    )
+    return redirect("/vacancies/?updated=1")
 
 
 def about_view(request):

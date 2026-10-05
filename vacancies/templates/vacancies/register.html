@@ -2,26 +2,347 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Регистрация — Job AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --accent: #635bff;
+            --accent-dark: #5148e8;
+            --text: #17181c;
+            --muted: #7a7d86;
+            --border: #e7e7ed;
+            --bg: #f6f7fb;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 25px;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 15% 15%,
+                    rgba(99, 91, 255, 0.13),
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at 85% 85%,
+                    rgba(16, 185, 129, 0.08),
+                    transparent 30%
+                ),
+                var(--bg);
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 450px;
+
+            animation: appear 0.65s ease both;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .subtitle {
+            margin-top: 7px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .card {
+            position: relative;
+            overflow: hidden;
+
+            padding: 34px;
+
+            border: 1px solid rgba(20, 20, 30, 0.08);
+            border-radius: 24px;
+
+            background: rgba(255, 255, 255, 0.88);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 20px 70px rgba(30, 30, 50, 0.10);
+        }
+
+        .card::before {
+            content: "";
+
+            position: absolute;
+            width: 240px;
+            height: 240px;
+
+            top: -150px;
+            right: -100px;
+
+            background: radial-gradient(
+                circle,
+                rgba(99, 91, 255, 0.18),
+                transparent 70%
+            );
+
+            animation: pulse 5s ease-in-out infinite;
+        }
+
+        h1 {
+            position: relative;
+
+            margin: 0 0 8px;
+
+            font-size: 25px;
+            letter-spacing: -0.8px;
+        }
+
+        .description {
+            position: relative;
+
+            margin: 0 0 25px;
+
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        form p {
+            margin: 0 0 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+
+            color: #4e5058;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid var(--border);
+            border-radius: 11px;
+
+            background: #fbfbfd;
+
+            font: inherit;
+            color: var(--text);
+
+            transition:
+                border 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+        }
+
+        input:focus {
+            outline: none;
+
+            border-color: var(--accent);
+            background: white;
+
+            box-shadow:
+                0 0 0 4px rgba(99, 91, 255, 0.10);
+        }
+
+        .helptext {
+            display: block;
+
+            margin-top: 6px;
+
+            color: #9699a2;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        ul.errorlist {
+            margin: 5px 0 8px;
+            padding: 0;
+
+            list-style: none;
+
+            color: #dc3545;
+            font-size: 12px;
+        }
+
+        button {
+            position: relative;
+            z-index: 2;
+
+            width: 100%;
+            margin-top: 8px;
+
+            padding: 13px 18px;
+
+            border: 0;
+            border-radius: 12px;
+
+            background: var(--accent);
+            color: white;
+
+            font: inherit;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 25px rgba(99, 91, 255, 0.25);
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 14px 30px rgba(99, 91, 255, 0.32);
+        }
+
+        .login {
+            text-align: center;
+
+            margin: 23px 0 0;
+
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .login a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .login a:hover {
+            text-decoration: underline;
+        }
+
+        .back {
+            display: block;
+
+            margin-top: 18px;
+
+            text-align: center;
+
+            color: var(--muted);
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-    <h1>Регистрация</h1>
+<div class="wrapper">
 
-    <form method="post">
-        {% csrf_token %}
+    <div class="brand">
 
-        {{ form.as_p }}
+        <div class="logo">
+            Job <span>AI</span>
+        </div>
 
-        <button type="submit">
-            Зарегистрироваться
-        </button>
-    </form>
+        <div class="subtitle">
+            Умный поиск вакансий
+        </div>
 
-    <p>
-        Уже есть аккаунт?
-        <a href="/login/">Войти</a>
-    </p>
+    </div>
+
+    <div class="card">
+
+        <h1>Создать аккаунт</h1>
+
+        <p class="description">
+            Создайте профиль, чтобы Job AI мог подбирать
+            вакансии именно под ваши навыки и предпочтения.
+        </p>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit">
+                Создать аккаунт
+            </button>
+
+        </form>
+
+        <p class="login">
+            Уже есть аккаунт?
+            <a href="/login/">
+                Войти
+            </a>
+        </p>
+
+    </div>
+
+    <a class="back" href="{% url 'about' %}">
+        ← О проекте
+    </a>
+
+</div>
 
 </body>
 </html>

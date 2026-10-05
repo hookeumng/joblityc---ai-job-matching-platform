@@ -1,47 +1,265 @@
-html
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Job AI — Вакансии</title>
+    <title>Вакансии — Job AI</title>
 
     <style>
         * {
             box-sizing: border-box;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f7fa;
-            color: #222;
-            margin: 0;
-            padding: 40px;
+        :root {
+            --bg: #f6f7fb;
+            --card: rgba(255, 255, 255, 0.90);
+            --text: #17181c;
+            --muted: #777a84;
+            --border: rgba(20, 20, 30, 0.08);
+
+            --accent: #635bff;
+            --accent-dark: #5148e8;
+
+            --green: #16a66a;
+            --green-soft: rgba(22, 166, 106, 0.10);
         }
 
-        .container {
-            max-width: 1000px;
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            color: var(--text);
+
+            background:
+                radial-gradient(
+                    circle at 8% 8%,
+                    rgba(99, 91, 255, 0.09),
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 92% 45%,
+                    rgba(16, 185, 129, 0.06),
+                    transparent 25%
+                ),
+                var(--bg);
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+
+            border-bottom: 1px solid var(--border);
+
+            background: rgba(246, 247, 251, 0.80);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .navbar-inner {
+            width: min(1120px, calc(100% - 32px));
             margin: 0 auto;
+
+            padding: 16px 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            text-decoration: none;
+
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav a,
+        .username {
+            padding: 8px 11px;
+            border-radius: 9px;
+
+            color: var(--muted);
+            text-decoration: none;
+
+            font-size: 13px;
+
+            transition:
+                color 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .nav a:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .username {
+            color: #555861;
+            font-weight: 600;
+        }
+
+        .page {
+            width: min(1000px, calc(100% - 32px));
+            margin: 0 auto;
+
+            padding: 55px 0 90px;
+        }
+
+        .hero {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 30px;
+
+            margin-bottom: 28px;
+
+            animation: fadeUp 0.55s ease both;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 6px 10px;
+
+            border-radius: 999px;
+
+            background: rgba(99, 91, 255, 0.09);
+            color: var(--accent);
+
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .eyebrow::before {
+            content: "";
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: var(--accent);
+
+            box-shadow:
+                0 0 12px rgba(99, 91, 255, 0.8);
         }
 
         h1 {
-            font-size: 32px;
-            margin-bottom: 8px;
+            margin: 13px 0 5px;
+
+            font-size: clamp(35px, 5vw, 48px);
+            line-height: 1;
+
+            letter-spacing: -2.5px;
+        }
+
+        .count {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .update-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 11px 15px;
+
+            border-radius: 11px;
+
+            background: var(--text);
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            box-shadow:
+                0 8px 20px rgba(20, 20, 30, 0.12);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .update-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 28px rgba(20, 20, 30, 0.18);
+        }
+
+        .success {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            margin-bottom: 20px;
+            padding: 12px 15px;
+
+            border: 1px solid rgba(22, 166, 106, 0.14);
+            border-radius: 12px;
+
+            background: var(--green-soft);
+            color: #168354;
+
+            font-size: 13px;
+
+            animation: slideDown 0.4s ease both;
         }
 
         .filters {
-            background: white;
-            padding: 22px;
-            border-radius: 14px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+            margin-bottom: 25px;
+            padding: 17px;
+
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            background: rgba(255, 255, 255, 0.76);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            animation: fadeUp 0.55s 0.08s ease both;
         }
 
         .filters-row {
             display: flex;
-            gap: 12px;
             align-items: end;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
@@ -52,87 +270,290 @@ html
         }
 
         .filter-group label {
-            font-size: 13px;
-            color: #666;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 700;
         }
 
         .filter-group input {
-            width: 220px;
-            padding: 11px 13px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
+            width: 205px;
+
+            padding: 11px 12px;
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            background: white;
+
+            color: var(--text);
+            font: inherit;
+            font-size: 13px;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
         }
 
         .filter-group input:focus {
-            border-color: #222;
+            outline: none;
+
+            border-color: var(--accent);
+
+            box-shadow:
+                0 0 0 4px rgba(99, 91, 255, 0.08);
         }
 
         .filter-button {
-            padding: 11px 18px;
-            border: none;
-            border-radius: 8px;
-            background: #222;
+            padding: 11px 15px;
+
+            border: 0;
+            border-radius: 10px;
+
+            background: var(--accent);
             color: white;
+
+            font: inherit;
+            font-size: 13px;
+            font-weight: 700;
+
             cursor: pointer;
-            font-size: 14px;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
         }
 
         .filter-button:hover {
-            background: #444;
+            background: var(--accent-dark);
+            transform: translateY(-1px);
         }
 
         .reset-button {
-            padding: 11px 15px;
-            color: #555;
+            padding: 10px 8px;
+
+            color: var(--muted);
             text-decoration: none;
-            font-size: 14px;
+
+            font-size: 12px;
+
+            transition: color 0.2s ease;
+        }
+
+        .reset-button:hover {
+            color: var(--text);
         }
 
         .vacancy {
-            background: white;
-            padding: 26px;
-            margin-bottom: 18px;
-            border-radius: 14px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-            transition: transform 0.15s, box-shadow 0.15s;
+            position: relative;
+            overflow: hidden;
+
+            margin-bottom: 15px;
+            padding: 25px;
+
+            border: 1px solid var(--border);
+            border-radius: 20px;
+
+            background: var(--card);
+
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+
+            box-shadow:
+                0 8px 30px rgba(20, 20, 30, 0.045);
+
+            animation: fadeUp 0.6s ease both;
+
+            transition:
+                transform 0.3s cubic-bezier(.2,.8,.2,1),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        .vacancy:nth-of-type(1) {
+            animation-delay: 0.08s;
+        }
+
+        .vacancy:nth-of-type(2) {
+            animation-delay: 0.12s;
+        }
+
+        .vacancy:nth-of-type(3) {
+            animation-delay: 0.16s;
         }
 
         .vacancy:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
+            transform: translateY(-4px);
+
+            border-color: rgba(99, 91, 255, 0.13);
+
+            box-shadow:
+                0 18px 50px rgba(20, 20, 30, 0.09);
+        }
+
+        .vacancy::before {
+            content: "";
+
+            position: absolute;
+
+            width: 190px;
+            height: 190px;
+
+            top: -140px;
+            right: -100px;
+
+            background: radial-gradient(
+                circle,
+                rgba(99, 91, 255, 0.10),
+                transparent 70%
+            );
+
+            pointer-events: none;
         }
 
         .vacancy h2 {
-            margin: 0 0 8px;
-            font-size: 22px;
+            margin: 0 0 6px;
+
+            font-size: 20px;
+            line-height: 1.25;
+
+            letter-spacing: -0.5px;
         }
 
         .company {
-            color: #666;
-            margin-bottom: 16px;
+            margin-bottom: 17px;
+
+            color: var(--muted);
+
+            font-size: 13px;
         }
 
         .salary {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 16px;
+            margin-bottom: 15px;
+
+            font-size: 17px;
+            font-weight: 800;
         }
 
         .info-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
+
             margin-bottom: 18px;
         }
 
         .info-item {
-            background: #f5f7fa;
-            padding: 7px 11px;
+            padding: 6px 9px;
+
+            border: 1px solid rgba(20, 20, 30, 0.05);
             border-radius: 8px;
-            font-size: 13px;
-            color: #555;
+
+            background: #f5f5f8;
+
+            color: #666973;
+
+            font-size: 11px;
+        }
+
+        .match {
+            margin: 20px 0;
+            padding: 15px;
+
+            border: 1px solid rgba(99, 91, 255, 0.10);
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(99, 91, 255, 0.055),
+                    rgba(99, 91, 255, 0.015)
+                );
+        }
+
+        .match-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 9px;
+        }
+
+        .match-title {
+            color: #686b75;
+
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .match-score {
+            color: var(--accent);
+
+            font-size: 19px;
+            font-weight: 850;
+        }
+
+        .match-bar {
+            width: 100%;
+            height: 7px;
+
+            overflow: hidden;
+
+            border-radius: 999px;
+
+            background: #e9e9f0;
+        }
+
+        .match-progress {
+            height: 100%;
+
+            border-radius: inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #7b73ff,
+                    #635bff
+                );
+
+            box-shadow:
+                0 0 14px rgba(99, 91, 255, 0.28);
+
+            transform-origin: left;
+
+            animation: progress 1s cubic-bezier(.2,.8,.2,1) both;
+        }
+
+        .match-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+
+            margin-top: 12px;
+        }
+
+        .match-detail {
+            padding: 10px;
+
+            border-radius: 10px;
+
+            background: rgba(255, 255, 255, 0.55);
+
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .match-detail strong {
+            display: block;
+
+            margin-bottom: 3px;
+
+            color: #555862;
+        }
+
+        .match-detail span {
+            color: var(--muted);
         }
 
         .skills {
@@ -140,205 +561,246 @@ html
         }
 
         .section-title {
-            font-size: 13px;
-            font-weight: bold;
             margin-bottom: 8px;
-            color: #444;
+
+            color: #555862;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .skill-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 7px;
+            gap: 6px;
         }
 
         .skill {
-            background: #222;
-            color: white;
-            padding: 6px 10px;
-            border-radius: 7px;
-            font-size: 12px;
-        }
+            padding: 6px 9px;
 
-        .match {
-            margin-bottom: 20px;
-        }
+            border: 1px solid rgba(20, 20, 30, 0.06);
+            border-radius: 8px;
 
-        .match-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 7px;
-            font-size: 13px;
-            font-weight: bold;
-        }
+            background: #f1f1f5;
 
-        .match-bar {
-            width: 100%;
-            height: 8px;
-            background: #e9ecef;
-            border-radius: 10px;
-            overflow: hidden;
-        }
+            color: #5d6069;
 
-        .match-progress {
-            height: 100%;
-            background: #222;
-            border-radius: 10px;
-        }
-
-        .description {
-            color: #555;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            font-size: 11px;
         }
 
         .button {
-            display: inline-block;
-            padding: 10px 17px;
-            background: #222;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 10px 14px;
+
+            border-radius: 10px;
+
+            background: var(--text);
             color: white;
+
             text-decoration: none;
-            border-radius: 8px;
-            font-size: 14px;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
         }
 
         .button:hover {
-            background: #444;
+            background: #2d2e33;
+            transform: translateY(-2px);
+        }
+
+        .empty {
+            padding: 60px 20px;
+
+            text-align: center;
+
+            border: 1px dashed #dfe0e7;
+            border-radius: 20px;
+
+            color: var(--muted);
+
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes progress {
+            from {
+                transform: scaleX(0);
+            }
+
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        @media (max-width: 760px) {
+            .hero {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .update-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .match-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav a:nth-child(1) {
+                display: none;
+            }
+
+            .page {
+                padding-top: 35px;
+            }
+
+            .filters-row {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .filter-group,
+            .filter-group input,
+            .filter-button {
+                width: 100%;
+            }
+
+            .vacancy {
+                padding: 20px;
+                border-radius: 17px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<header style="
-    background: #222;
-    color: white;
-    padding: 18px 40px;
-    margin: -40px -40px 40px -40px;
-">
-    <div style="
-        max-width: 1000px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    ">
-        <div style="
-            font-size: 24px;
-            font-weight: bold;
-        ">
-            Job AI
-        </div>
+<nav class="navbar">
 
-        <div style="
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        ">
-            <div style="
-                font-size: 14px;
-                opacity: 0.8;
-            ">
-                Умный поиск вакансий
-            </div>
+    <div class="navbar-inner">
 
-            <a
-                href="{% url 'about' %}"
-                style="
-                    color: white;
-                    text-decoration: none;
-                    font-size: 14px;
-                "
-            >
+        <a class="logo" href="{% url 'vacancy_list' %}">
+            Job <span>AI</span>
+        </a>
+
+        <div class="nav">
+
+            <a href="{% url 'about' %}">
                 О проекте
             </a>
 
-            <a
-                href="{% url 'profile' %}"
-                style="
-                    color: white;
-                    text-decoration: none;
-                    font-size: 14px;
-                "
-            >
-                Мой профиль
+            <a href="{% url 'profile' %}">
+                Профиль
             </a>
+
             {% if user.is_authenticated %}
 
-            <span style="
-                color: white;
-                font-size: 14px;
-                opacity: 0.8;
-            ">
-                {{ user.username }}
-            </span>
+                <span class="username">
+                    {{ user.username }}
+                </span>
 
-            <a
-                href="{% url 'logout' %}"
-                style="
-                    color: white;
-                    text-decoration: none;
-                    font-size: 14px;
-                "
-            >
-                Выйти
-            </a>
+                <a href="{% url 'logout' %}">
+                    Выйти
+                </a>
 
-        {% else %}
+            {% else %}
 
-            <a
-                href="{% url 'login' %}"
-                style="
-                    color: white;
-                    text-decoration: none;
-                    font-size: 14px;
-                "
-            >
-                Войти
-            </a>
+                <a href="{% url 'login' %}">
+                    Войти
+                </a>
 
-            <a
-                href="{% url 'register' %}"
-                style="
-                    color: white;
-                    text-decoration: none;
-                    font-size: 14px;
-                "
-            >
-                Регистрация
-            </a>
+                <a href="{% url 'register' %}">
+                    Регистрация
+                </a>
 
-        {% endif %}
+            {% endif %}
+
         </div>
+
     </div>
-</header>
 
-<div class="container">
+</nav>
 
-    <h1>Вакансии</h1>
+<main class="page">
+
+    <section class="hero">
+
+        <div>
+
+            <div class="eyebrow">
+                AI-подбор
+            </div>
+
+            <h1>
+                Вакансии
+            </h1>
+
+            <div class="count">
+                Найдено подходящих вакансий: {{ vacancies|length }}
+            </div>
+
+        </div>
+
+        <a
+            class="update-button"
+            href="{% url 'update_vacancies' %}"
+        >
+            ↻ Обновить вакансии
+        </a>
+
+    </section>
 
     {% if updated %}
-        <div style="
-            background: #e8f5e9;
-            color: #2e7d32;
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        ">
-            ✓ Вакансии успешно обновлены
-        </div>
-    {% endif %}
 
-    <p style="color: #666; margin-bottom: 25px;">
-        Найдено вакансий: {{ vacancies|length }}
-    </p>
+        <div class="success">
+            <span>✓</span>
+            <span>Вакансии успешно обновлены и проанализированы AI.</span>
+        </div>
+
+    {% endif %}
 
     <form method="get" class="filters">
 
         <div class="filters-row">
 
             <div class="filter-group">
+
                 <label for="min_salary">
                     Минимальная зарплата
                 </label>
@@ -350,9 +812,11 @@ html
                     value="{{ min_salary }}"
                     placeholder="Например, 150000"
                 >
+
             </div>
 
             <div class="filter-group">
+
                 <label for="skill">
                     Навыки
                 </label>
@@ -364,22 +828,19 @@ html
                     value="{{ skill }}"
                     placeholder="Python, Django, PostgreSQL"
                 >
+
             </div>
 
-            <button class="filter-button" type="submit">
-                Найти вакансии
+            <button
+                class="filter-button"
+                type="submit"
+            >
+                Найти
             </button>
 
             <a
                 class="reset-button"
-                href="{% url 'update_vacancies' %}"
-            >
-                ↻ Обновить вакансии
-            </a>
-
-            <a
-                class="reset-button"
-                href="/vacancies/"
+                href="{% url 'vacancy_list' %}"
             >
                 Сбросить
             </a>
@@ -390,9 +851,11 @@ html
 
     {% for vacancy in vacancies %}
 
-        <div class="vacancy">
+        <article class="vacancy">
 
-            <h2>{{ vacancy.title }}</h2>
+            <h2>
+                {{ vacancy.title }}
+            </h2>
 
             <div class="company">
                 {{ vacancy.company }}
@@ -450,84 +913,161 @@ html
 
                 {% if vacancy.experience %}
                     <div class="info-item">
-                        👨‍💻 {{ vacancy.experience }}
+                        Опыт: {{ vacancy.experience }}
                     </div>
                 {% endif %}
 
                 {% if vacancy.employment %}
                     <div class="info-item">
-                        💼 {{ vacancy.employment }}
+                        {{ vacancy.employment }}
                     </div>
                 {% endif %}
 
                 {% if vacancy.schedule %}
                     <div class="info-item">
-                        📅 {{ vacancy.schedule }}
+                        {{ vacancy.schedule }}
                     </div>
                 {% endif %}
 
                 {% if vacancy.work_format %}
                     <div class="info-item">
-                        🏢 {{ vacancy.work_format }}
+                        {{ vacancy.work_format }}
                     </div>
                 {% endif %}
 
             </div>
 
-            {% if skill %}
-                <div class="match">
+            <div class="match">
 
-                    <div class="match-header">
-                        <span>Соответствие навыкам</span>
-                        <span>{{ vacancy.match_score }}%</span>
-                    </div>
+                <div class="match-header">
 
-                    <div class="match-bar">
-                        <div
-                            class="match-progress"
-                            style="width: {{ vacancy.match_score }}%;"
-                        ></div>
-                    </div>
+                    <span class="match-title">
+                        Соответствие профилю
+                    </span>
+
+                    <span class="match-score">
+                        {{ vacancy.match_score }}%
+                    </span>
 
                 </div>
-            {% endif %}
+
+                <div class="match-bar">
+
+                    <div
+                        class="match-progress"
+                        style="width: {{ vacancy.match_score }}%;"
+                    ></div>
+
+                </div>
+
+                <div class="match-details">
+
+                    {% if vacancy.matched_skills %}
+
+                        <div class="match-detail">
+
+                            <strong>
+                                Подходит
+                            </strong>
+
+                            <span>
+                                {{ vacancy.matched_skills }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+                    {% if vacancy.missing_skills %}
+
+                        <div class="match-detail">
+
+                            <strong>
+                                Не хватает
+                            </strong>
+
+                            <span>
+                                {{ vacancy.missing_skills }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+                {% if vacancy.match_reason %}
+
+                    <div
+                        class="match-detail"
+                        style="margin-top: 10px;"
+                    >
+
+                        <strong>
+                            Почему подходит
+                        </strong>
+
+                        <span>
+                            {{ vacancy.match_reason }}
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
 
             {% if vacancy.skills_list %}
+
                 <div class="skills">
 
                     <div class="section-title">
-                        Навыки
+                        Навыки вакансии
                     </div>
 
                     <div class="skill-list">
 
                         {% for skill_item in vacancy.skills_list %}
+
                             <span class="skill">
                                 {{ skill_item }}
                             </span>
+
                         {% endfor %}
 
                     </div>
 
                 </div>
+
             {% endif %}
 
             <a
                 class="button"
                 href="{% url 'vacancy_detail' vacancy.id %}"
             >
-                Подробнее
+                Подробнее →
             </a>
 
-        </div>
+        </article>
 
     {% empty %}
 
-        <p>Вакансий пока нет.</p>
+        <div class="empty">
+
+            <strong>
+                Подходящих вакансий пока нет
+            </strong>
+
+            <p>
+                Попробуйте обновить вакансии или изменить
+                настройки профиля.
+            </p>
+
+        </div>
 
     {% endfor %}
 
-</div>
+</main>
 
 </body>
 </html>

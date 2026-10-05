@@ -4,207 +4,510 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Job AI — О проекте</title>
+    <title>О проекте — Job AI</title>
 
     <style>
         * {
             box-sizing: border-box;
         }
 
+        :root {
+            --bg: #f6f7fb;
+            --card: rgba(255, 255, 255, 0.82);
+            --text: #17181c;
+            --muted: #747780;
+            --border: rgba(20, 20, 30, 0.08);
+            --accent: #635bff;
+            --accent-dark: #5148e8;
+            --green: #16a66a;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #f5f7fa;
-            color: #222;
             margin: 0;
-            padding: 40px;
+            min-height: 100vh;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(99, 91, 255, 0.10),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 30%,
+                    rgba(16, 185, 129, 0.08),
+                    transparent 30%
+                ),
+                var(--bg);
         }
 
-        .container {
-            max-width: 900px;
+        a {
+            color: inherit;
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            background: rgba(246, 247, 251, 0.78);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar-inner {
+            max-width: 1100px;
             margin: 0 auto;
-        }
+            padding: 18px 24px;
 
-        header {
-            background: #222;
-            color: white;
-            padding: 18px 40px;
-            margin: -40px -40px 40px -40px;
-        }
-
-        .header-inner {
-            max-width: 900px;
-            margin: 0 auto;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        header a {
-            color: white;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 14px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--muted);
+            padding: 9px 13px;
+            border-radius: 10px;
+            font-size: 14px;
+            transition:
+                color 0.2s ease,
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .nav a:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateY(-1px);
+        }
+
+        .container {
+            width: min(920px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 70px 0 90px;
+        }
+
+        .hero {
+            position: relative;
+            margin-bottom: 42px;
+            animation: fadeUp 0.7s ease both;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 7px 11px;
+            border-radius: 999px;
+
+            background: rgba(99, 91, 255, 0.09);
+            color: var(--accent);
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 12px rgba(99, 91, 255, 0.8);
         }
 
         h1 {
-            font-size: 32px;
-            margin-top: 0;
+            margin: 18px 0 14px;
+
+            font-size: clamp(38px, 6vw, 64px);
+            line-height: 0.98;
+            letter-spacing: -3px;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 0;
+
+            color: var(--muted);
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            position: relative;
+            overflow: hidden;
+
+            padding: 28px;
+
+            border: 1px solid var(--border);
+            border-radius: 22px;
+
+            background: var(--card);
+
+            box-shadow:
+                0 10px 35px rgba(20, 20, 30, 0.05);
+
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+
+            animation: fadeUp 0.7s ease both;
+            transition:
+                transform 0.35s cubic-bezier(.2,.8,.2,1),
+                box-shadow 0.35s ease,
+                border-color 0.35s ease;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.08s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.16s;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: 0.24s;
+        }
+
+        .card:nth-child(5) {
+            animation-delay: 0.32s;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            top: -100px;
+            right: -90px;
+
+            background: radial-gradient(
+                circle,
+                rgba(99, 91, 255, 0.14),
+                transparent 70%
+            );
+
+            pointer-events: none;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 91, 255, 0.16);
+
+            box-shadow:
+                0 18px 50px rgba(20, 20, 30, 0.09);
+        }
+
+        .card.full {
+            grid-column: 1 / -1;
+        }
+
+        .icon {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+            background: rgba(99, 91, 255, 0.1);
+            color: var(--accent);
+
+            font-size: 19px;
+            margin-bottom: 20px;
         }
 
         h2 {
-            margin-top: 0;
-            font-size: 22px;
+            margin: 0 0 12px;
+            font-size: 21px;
+            letter-spacing: -0.5px;
         }
 
-        p {
-            color: #555;
-            line-height: 1.6;
+        p,
+        li {
+            color: var(--muted);
+            line-height: 1.7;
         }
 
         ul {
-            color: #555;
-            line-height: 1.8;
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .techs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
         }
 
         .tech {
-            display: inline-block;
-            background: #f0f1f3;
-            padding: 8px 12px;
-            border-radius: 8px;
-            margin: 4px;
-            font-size: 14px;
+            padding: 9px 12px;
+
+            border-radius: 10px;
+
+            background: #f0f1f6;
+            border: 1px solid rgba(20, 20, 30, 0.06);
+
+            font-size: 13px;
+            font-weight: 600;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .tech:hover {
+            transform: translateY(-2px);
+            background: #e9e8ff;
         }
 
         .button {
-            display: inline-block;
-            padding: 11px 18px;
-            background: #222;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            margin-top: 18px;
+            padding: 12px 17px;
+
+            border-radius: 12px;
+
             color: white;
+            background: var(--accent);
+
             text-decoration: none;
-            border-radius: 8px;
-            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 700;
+
+            box-shadow:
+                0 8px 24px rgba(99, 91, 255, 0.25);
+
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .button:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow:
+                0 12px 30px rgba(99, 91, 255, 0.34);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .navbar-inner {
+                padding: 15px 16px;
+            }
+
+            .nav a {
+                padding: 8px;
+                font-size: 13px;
+            }
+
+            .container {
+                width: min(100% - 28px, 920px);
+                padding-top: 45px;
+            }
+
+            h1 {
+                letter-spacing: -2px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card.full {
+                grid-column: auto;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<header>
-    <div class="header-inner">
+<nav class="navbar">
+    <div class="navbar-inner">
 
-        <div class="logo">
-            Job AI
-        </div>
+        <a class="logo" href="{% url 'vacancy_list' %}">
+            Job <span>AI</span>
+        </a>
 
-        <div>
+        <div class="nav">
             <a href="{% url 'vacancy_list' %}">
                 Вакансии
             </a>
 
-            &nbsp;&nbsp;
-
             <a href="{% url 'profile' %}">
-                Мой профиль
+                Профиль
             </a>
         </div>
 
     </div>
-</header>
+</nav>
 
-<div class="container">
+<main class="container">
 
-    <div class="card">
+    <section class="hero">
 
-        <h1>О проекте</h1>
-
-        <p>
-            <strong>Job AI</strong> — это веб-приложение для поиска
-            и анализа вакансий.
-        </p>
-
-        <p>
-            Программа собирает информацию о вакансиях, сохраняет её
-            в базе данных и помогает пользователю выбрать наиболее
-            подходящие предложения.
-        </p>
-
-    </div>
-
-    <div class="card">
-
-        <h2>Как работает система</h2>
-
-        <ul>
-            <li>Получает данные о вакансиях.</li>
-            <li>Обрабатывает и сохраняет их в базе данных.</li>
-            <li>Показывает вакансии в удобной витрине.</li>
-            <li>Позволяет установить минимальную зарплату.</li>
-            <li>Анализирует навыки пользователя.</li>
-            <li>Рассчитывает процент соответствия вакансии.</li>
-        </ul>
-
-    </div>
-
-    <div class="card">
-
-        <h2>Анализ навыков</h2>
-
-        <p>
-            Пользователь указывает свои навыки в профиле.
-            Система сравнивает их с требованиями вакансии
-            и рассчитывает процент соответствия.
-        </p>
-
-        <p>
-            Благодаря этому наиболее подходящие вакансии
-            автоматически поднимаются выше в списке.
-        </p>
-
-    </div>
-
-    <div class="card">
-
-        <h2>Технологии</h2>
-
-        <div>
-            <span class="tech">Python</span>
-            <span class="tech">Django</span>
-            <span class="tech">SQLite</span>
-            <span class="tech">HTML</span>
-            <span class="tech">CSS</span>
+        <div class="eyebrow">
+            AI-платформа для поиска работы
         </div>
 
-    </div>
-
-    <div class="card">
-
-        <h2>Цель проекта</h2>
+        <h1>
+            Вакансии,<br>
+            которые подходят именно вам.
+        </h1>
 
         <p>
-            Создать простой интеллектуальный сервис, который
-            помогает соискателю быстрее находить вакансии,
-            соответствующие его навыкам и требованиям к зарплате.
+            Job AI анализирует вакансии и сравнивает их
+            с профессиональным профилем пользователя,
+            чтобы среди множества предложений находить
+            действительно подходящие.
         </p>
 
-        <a class="button" href="{% url 'vacancy_list' %}">
-            Перейти к вакансиям
-        </a>
+    </section>
 
-    </div>
+    <section class="grid">
 
-</div>
+        <article class="card">
+
+            <div class="icon">✦</div>
+
+            <h2>Как это работает</h2>
+
+            <ul>
+                <li>Получаем вакансии с HH.ru.</li>
+                <li>AI анализирует содержание вакансии.</li>
+                <li>Вакансия сохраняется в базе.</li>
+                <li>AI сравнивает её с профилем пользователя.</li>
+                <li>Каждой вакансии рассчитывается процент соответствия.</li>
+            </ul>
+
+        </article>
+
+        <article class="card">
+
+            <div class="icon">◎</div>
+
+            <h2>Персональный подбор</h2>
+
+            <p>
+                В профиле можно указать должность, навыки,
+                город, зарплату, опыт, формат и тип занятости.
+            </p>
+
+            <p>
+                Эти параметры используются AI при оценке
+                каждой найденной вакансии.
+            </p>
+
+        </article>
+
+        <article class="card">
+
+            <div class="icon">⌁</div>
+
+            <h2>AI-анализ</h2>
+
+            <p>
+                Система не просто ищет совпадения по словам.
+                YandexGPT анализирует контекст вакансии,
+                требования работодателя и профиль пользователя.
+            </p>
+        </article>
+
+        <article class="card">
+
+            <div class="icon">↗</div>
+
+            <h2>Умная витрина</h2>
+
+            <p>
+                Результаты сортируются по степени соответствия.
+                Чем выше оценка — тем выше вакансия в списке.
+            </p>
+        </article>
+
+        <article class="card full">
+
+            <div class="icon">⌘</div>
+
+            <h2>Технологии</h2>
+
+            <div class="techs">
+                <span class="tech">Python</span>
+                <span class="tech">Django</span>
+                <span class="tech">YandexGPT</span>
+                <span class="tech">SQLite</span>
+                <span class="tech">HTML</span>
+                <span class="tech">CSS</span>
+            </div>
+
+            <a class="button" href="{% url 'vacancy_list' %}">
+                Перейти к вакансиям →
+            </a>
+
+        </article>
+
+    </section>
+
+</main>
 
 </body>
 </html>
