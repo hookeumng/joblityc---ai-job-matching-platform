@@ -1,0 +1,26 @@
+
+{% extends "vacancies/email_base.html" %}
+
+{% block content %}
+    {% if success %}
+        <div class="status-icon success">✓</div>
+        <h1>Email подтверждён!</h1>
+        <p>
+            Отлично! Твой адрес электронной почты подтверждён,
+            и аккаунт Job AI активирован.
+        </p>
+        <a class="button" href="/accounts/login/">
+            Войти в аккаунт
+        </a>
+    {% else %}
+        <div class="status-icon error">!</div>
+        <h1>Не удалось подтвердить email</h1>
+        <p>
+            Ссылка недействительна, срок её действия истёк
+            или аккаунт уже был активирован.
+        </p>
+        <a class="button" href="/vacancies/email/resend/">
+            Запросить новое письмо
+        </a>
+    {% endif %}
+{% endblock %}

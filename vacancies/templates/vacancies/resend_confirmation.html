@@ -1,0 +1,52 @@
+
+{% extends "vacancies/email_base.html" %}
+
+{% block title %}Повторное письмо — Job AI{% endblock %}
+
+{% block content %}
+<div class="icon-wrap">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 7v5h-5"></path>
+        <path d="M4 17v-5h5"></path>
+        <path d="M5.5 9a7 7 0 0 1 11.7-2L20 12"></path>
+        <path d="M18.5 15a7 7 0 0 1-11.7 2L4 12"></path>
+    </svg>
+</div>
+
+<p class="eyebrow">Подтверждение аккаунта</p>
+<h1>Отправим письмо ещё раз</h1>
+
+<p class="description">
+    Укажи email, который использовал при регистрации.
+    Если аккаунту требуется подтверждение, мы отправим новую ссылку.
+</p>
+
+<form class="form" method="post">
+    {% csrf_token %}
+
+    <div class="field">
+        <label for="email">Адрес электронной почты</label>
+        <input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            maxlength="254"
+            required
+        >
+    </div>
+
+    <button class="button" type="submit">
+        Отправить ссылку
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M22 2 11 13"></path>
+            <path d="m22 2-7 20-4-9-9-4Z"></path>
+        </svg>
+    </button>
+</form>
+
+<a class="secondary-link" href="/login/">
+    Вернуться ко входу
+</a>
+{% endblock %}

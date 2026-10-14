@@ -15,6 +15,25 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import login, logout
 from .forms import RegistrationForm
 
+
+from django.conf import settings
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.auth.tokens import default_token_generator
+
+from .forms import RegistrationForm
+
+import logging
+
+logger = logging.getLogger(__name__)
+
+
 @login_required
 def vacancy_list(request):
     profile = UserProfile.objects.filter(
@@ -258,6 +277,45 @@ def about_view(request):
     )
 
 
+
+def send_confirmation_email(request, user):
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    token = default_token_generator.make_token(user)
+
+    confirmation_url = request.build_absolute_uri(
+        reverse(
+            "confirm_email",
+            kwargs={
+                "uidb64": uid,
+                "token": token,
+            },
+        )
+    )
+
+    result = send_mail(
+        subject="Подтверждение регистрации — Job AI",
+        message=(
+            f"Здравствуйте, {user.username}!\n\n"
+            "Для подтверждения email перейдите по ссылке:\n"
+            f"{confirmation_url}\n\n"
+            "Ссылка действительна 3 дня."
+        ),
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=[user.email],
+        fail_silently=False,
+    )
+
+    if result != 1:
+        raise RuntimeError(
+            f"Письмо не отправлено. User ID: {user.pk}"
+        )
+
+    logger.info(
+        "Confirmation email accepted by SMTP. User ID: %s",
+        user.pk,
+    )
+
+
 def register_view(request):
     if request.user.is_authenticated:
         return redirect("/vacancies/")
@@ -266,24 +324,111 @@ def register_view(request):
         form = RegistrationForm(request.POST)
 
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+            user.email = form.cleaned_data["email"]
+            user.is_active = False
+            user.save()
 
-            login(
-                request,
-                user,
-            )
+            try:
+                send_confirmation_email(request, user)
 
-            return redirect("/vacancies/profile/")
+            except Exception:
+                logger.exception(
+                    "Failed to send confirmation email. User ID: %s",
+                    user.pk,
+                )
+
+                form.add_error(
+                    None,
+                    "Аккаунт создан, но письмо отправить не удалось. "
+                    "Попробуйте запросить письмо повторно.",
+                )
+
+            else:
+                return render(
+                    request,
+                    "vacancies/email_sent.html",
+                )
     else:
         form = RegistrationForm()
 
     return render(
         request,
         "vacancies/register.html",
-        {
-            "form": form,
-        },
+        {"form": form},
     )
+
+
+def resend_confirmation_view(request):
+    if request.method == "POST":
+        email = request.POST.get("email", "").strip()
+
+        user = User.objects.filter(
+            email__iexact=email,
+            is_active=False,
+        ).first()
+
+        if user is None:
+            logger.warning(
+                "Resend requested, but no inactive account was found."
+            )
+        else:
+            try:
+                send_confirmation_email(request, user)
+
+            except Exception:
+                logger.exception(
+                    "Failed to resend confirmation email. User ID: %s",
+                    user.pk,
+                )
+
+            else:
+                logger.info(
+                    "Confirmation email resent. User ID: %s",
+                    user.pk,
+                )
+
+        return render(
+            request,
+            "vacancies/email_sent.html",
+        )
+
+    return render(
+        request,
+        "vacancies/resend_confirmation.html",
+    )
+
+
+def confirm_email_view(request, uidb64, token):
+    success = False
+
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+
+        if (
+            not user.is_active
+            and default_token_generator.check_token(user, token)
+        ):
+            user.is_active = True
+            user.save(update_fields=["is_active"])
+            success = True
+
+    except (
+        User.DoesNotExist,
+        ValueError,
+        TypeError,
+        OverflowError,
+    ):
+        pass
+
+    return render(
+        request,
+        "vacancies/email_confirm.html",
+        {"success": success},
+    )
+
+
 
 
 def logout_view(request):

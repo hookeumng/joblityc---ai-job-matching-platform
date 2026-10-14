@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -18,10 +19,8 @@
             --text: #17181c;
             --muted: #777a84;
             --border: rgba(20, 20, 30, 0.08);
-
             --accent: #635bff;
             --accent-dark: #5148e8;
-
             --green: #16a66a;
             --green-soft: rgba(22, 166, 106, 0.10);
         }
@@ -33,28 +32,11 @@
         body {
             margin: 0;
             min-height: 100vh;
-
-            font-family:
-                Inter,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Arial,
-                sans-serif;
-
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
             color: var(--text);
-
             background:
-                radial-gradient(
-                    circle at 8% 8%,
-                    rgba(99, 91, 255, 0.09),
-                    transparent 25%
-                ),
-                radial-gradient(
-                    circle at 92% 45%,
-                    rgba(16, 185, 129, 0.06),
-                    transparent 25%
-                ),
+                radial-gradient(circle at 8% 8%, rgba(99, 91, 255, 0.09), transparent 25%),
+                radial-gradient(circle at 92% 45%, rgba(16, 185, 129, 0.06), transparent 25%),
                 var(--bg);
         }
 
@@ -62,11 +44,8 @@
             position: sticky;
             top: 0;
             z-index: 50;
-
             border-bottom: 1px solid var(--border);
-
             background: rgba(246, 247, 251, 0.80);
-
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
         }
@@ -74,9 +53,7 @@
         .navbar-inner {
             width: min(1120px, calc(100% - 32px));
             margin: 0 auto;
-
             padding: 16px 0;
-
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -85,12 +62,11 @@
 
         .logo {
             text-decoration: none;
-
             font-size: 21px;
             font-weight: 800;
             letter-spacing: -0.5px;
-
             white-space: nowrap;
+            color: var(--text);
         }
 
         .logo span {
@@ -107,15 +83,10 @@
         .username {
             padding: 8px 11px;
             border-radius: 9px;
-
             color: var(--muted);
             text-decoration: none;
-
             font-size: 13px;
-
-            transition:
-                color 0.2s ease,
-                background 0.2s ease;
+            transition: color 0.2s ease, background 0.2s ease;
         }
 
         .nav a:hover {
@@ -131,7 +102,6 @@
         .page {
             width: min(1000px, calc(100% - 32px));
             margin: 0 auto;
-
             padding: 55px 0 90px;
         }
 
@@ -140,9 +110,7 @@
             align-items: end;
             justify-content: space-between;
             gap: 30px;
-
             margin-bottom: 28px;
-
             animation: fadeUp 0.55s ease both;
         }
 
@@ -150,38 +118,27 @@
             display: inline-flex;
             align-items: center;
             gap: 7px;
-
             padding: 6px 10px;
-
             border-radius: 999px;
-
             background: rgba(99, 91, 255, 0.09);
             color: var(--accent);
-
             font-size: 11px;
             font-weight: 800;
         }
 
         .eyebrow::before {
             content: "";
-
             width: 6px;
             height: 6px;
-
             border-radius: 50%;
-
             background: var(--accent);
-
-            box-shadow:
-                0 0 12px rgba(99, 91, 255, 0.8);
+            box-shadow: 0 0 12px rgba(99, 91, 255, 0.8);
         }
 
         h1 {
             margin: 13px 0 5px;
-
             font-size: clamp(35px, 5vw, 48px);
             line-height: 1;
-
             letter-spacing: -2.5px;
         }
 
@@ -194,65 +151,44 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-
             padding: 11px 15px;
-
             border-radius: 11px;
-
             background: var(--text);
             color: white;
-
             text-decoration: none;
-
             font-size: 13px;
             font-weight: 700;
-
-            box-shadow:
-                0 8px 20px rgba(20, 20, 30, 0.12);
-
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
+            box-shadow: 0 8px 20px rgba(20, 20, 30, 0.12);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .update-button:hover {
             transform: translateY(-2px);
-
-            box-shadow:
-                0 12px 28px rgba(20, 20, 30, 0.18);
+            box-shadow: 0 12px 28px rgba(20, 20, 30, 0.18);
         }
 
         .success {
             display: flex;
             align-items: center;
             gap: 9px;
-
             margin-bottom: 20px;
             padding: 12px 15px;
-
             border: 1px solid rgba(22, 166, 106, 0.14);
             border-radius: 12px;
-
             background: var(--green-soft);
             color: #168354;
-
             font-size: 13px;
-
             animation: slideDown 0.4s ease both;
         }
 
         .filters {
             margin-bottom: 25px;
             padding: 17px;
-
             border: 1px solid var(--border);
             border-radius: 18px;
-
             background: rgba(255, 255, 255, 0.76);
-
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-
             animation: fadeUp 0.55s 0.08s ease both;
         }
 
@@ -277,50 +213,33 @@
 
         .filter-group input {
             width: 205px;
-
             padding: 11px 12px;
-
             border: 1px solid var(--border);
             border-radius: 10px;
-
             background: white;
-
             color: var(--text);
             font: inherit;
             font-size: 13px;
-
-            transition:
-                border-color 0.2s ease,
-                box-shadow 0.2s ease;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
         .filter-group input:focus {
             outline: none;
-
             border-color: var(--accent);
-
-            box-shadow:
-                0 0 0 4px rgba(99, 91, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(99, 91, 255, 0.08);
         }
 
         .filter-button {
             padding: 11px 15px;
-
             border: 0;
             border-radius: 10px;
-
             background: var(--accent);
             color: white;
-
             font: inherit;
             font-size: 13px;
             font-weight: 700;
-
             cursor: pointer;
-
-            transition:
-                transform 0.2s ease,
-                background 0.2s ease;
+            transition: transform 0.2s ease, background 0.2s ease;
         }
 
         .filter-button:hover {
@@ -328,14 +247,17 @@
             transform: translateY(-1px);
         }
 
+        .filter-button:disabled {
+            opacity: 0.7;
+            cursor: wait;
+            transform: none;
+        }
+
         .reset-button {
             padding: 10px 8px;
-
             color: var(--muted);
             text-decoration: none;
-
             font-size: 12px;
-
             transition: color 0.2s ease;
         }
 
@@ -343,93 +265,95 @@
             color: var(--text);
         }
 
+        /* Индикатор поиска */
+
+        .search-status {
+            display: none;
+            align-items: center;
+            gap: 14px;
+            margin: 0 0 24px;
+            padding: 18px 20px;
+            border: 1px solid rgba(99, 91, 255, 0.15);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 8px 25px rgba(20, 20, 30, 0.04);
+        }
+
+        .search-status.visible {
+            display: flex;
+            animation: fadeUp 0.3s ease both;
+        }
+
+        .search-spinner {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            border: 3px solid rgba(99, 91, 255, 0.15);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .search-status-text {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .search-status-subtext {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
         .vacancy {
             position: relative;
             overflow: hidden;
-
             margin-bottom: 15px;
             padding: 25px;
-
             border: 1px solid var(--border);
             border-radius: 20px;
-
             background: var(--card);
-
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-
-            box-shadow:
-                0 8px 30px rgba(20, 20, 30, 0.045);
-
+            box-shadow: 0 8px 30px rgba(20, 20, 30, 0.045);
             animation: fadeUp 0.6s ease both;
-
-            transition:
-                transform 0.3s cubic-bezier(.2,.8,.2,1),
-                box-shadow 0.3s ease,
-                border-color 0.3s ease;
-        }
-
-        .vacancy:nth-of-type(1) {
-            animation-delay: 0.08s;
-        }
-
-        .vacancy:nth-of-type(2) {
-            animation-delay: 0.12s;
-        }
-
-        .vacancy:nth-of-type(3) {
-            animation-delay: 0.16s;
+            transition: transform 0.3s cubic-bezier(.2, .8, .2, 1),
+                box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
         .vacancy:hover {
             transform: translateY(-4px);
-
             border-color: rgba(99, 91, 255, 0.13);
-
-            box-shadow:
-                0 18px 50px rgba(20, 20, 30, 0.09);
+            box-shadow: 0 18px 50px rgba(20, 20, 30, 0.09);
         }
 
         .vacancy::before {
             content: "";
-
             position: absolute;
-
             width: 190px;
             height: 190px;
-
             top: -140px;
             right: -100px;
-
-            background: radial-gradient(
-                circle,
-                rgba(99, 91, 255, 0.10),
-                transparent 70%
-            );
-
+            background: radial-gradient(circle, rgba(99, 91, 255, 0.10), transparent 70%);
             pointer-events: none;
         }
 
         .vacancy h2 {
             margin: 0 0 6px;
-
             font-size: 20px;
             line-height: 1.25;
-
             letter-spacing: -0.5px;
         }
 
         .company {
             margin-bottom: 17px;
-
             color: var(--muted);
-
             font-size: 13px;
         }
 
         .salary {
             margin-bottom: 15px;
-
             font-size: 17px;
             font-weight: 800;
         }
@@ -438,49 +362,35 @@
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
-
             margin-bottom: 18px;
         }
 
         .info-item {
             padding: 6px 9px;
-
             border: 1px solid rgba(20, 20, 30, 0.05);
             border-radius: 8px;
-
             background: #f5f5f8;
-
             color: #666973;
-
             font-size: 11px;
         }
 
         .match {
             margin: 20px 0;
             padding: 15px;
-
             border: 1px solid rgba(99, 91, 255, 0.10);
             border-radius: 14px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(99, 91, 255, 0.055),
-                    rgba(99, 91, 255, 0.015)
-                );
+            background: linear-gradient(135deg, rgba(99, 91, 255, 0.055), rgba(99, 91, 255, 0.015));
         }
 
         .match-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             margin-bottom: 9px;
         }
 
         .match-title {
             color: #686b75;
-
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
@@ -489,7 +399,6 @@
 
         .match-score {
             color: var(--accent);
-
             font-size: 19px;
             font-weight: 850;
         }
@@ -497,58 +406,38 @@
         .match-bar {
             width: 100%;
             height: 7px;
-
             overflow: hidden;
-
             border-radius: 999px;
-
             background: #e9e9f0;
         }
 
         .match-progress {
             height: 100%;
-
             border-radius: inherit;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #7b73ff,
-                    #635bff
-                );
-
-            box-shadow:
-                0 0 14px rgba(99, 91, 255, 0.28);
-
+            background: linear-gradient(90deg, #7b73ff, #635bff);
+            box-shadow: 0 0 14px rgba(99, 91, 255, 0.28);
             transform-origin: left;
-
-            animation: progress 1s cubic-bezier(.2,.8,.2,1) both;
+            animation: progress 1s cubic-bezier(.2, .8, .2, 1) both;
         }
 
         .match-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
-
             margin-top: 12px;
         }
 
         .match-detail {
             padding: 10px;
-
             border-radius: 10px;
-
             background: rgba(255, 255, 255, 0.55);
-
             font-size: 11px;
             line-height: 1.5;
         }
 
         .match-detail strong {
             display: block;
-
             margin-bottom: 3px;
-
             color: #555862;
         }
 
@@ -562,12 +451,9 @@
 
         .section-title {
             margin-bottom: 8px;
-
             color: #555862;
-
             font-size: 11px;
             font-weight: 800;
-
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -580,14 +466,10 @@
 
         .skill {
             padding: 6px 9px;
-
             border: 1px solid rgba(20, 20, 30, 0.06);
             border-radius: 8px;
-
             background: #f1f1f5;
-
             color: #5d6069;
-
             font-size: 11px;
         }
 
@@ -595,22 +477,14 @@
             display: inline-flex;
             align-items: center;
             gap: 7px;
-
             padding: 10px 14px;
-
             border-radius: 10px;
-
             background: var(--text);
             color: white;
-
             text-decoration: none;
-
             font-size: 12px;
             font-weight: 700;
-
-            transition:
-                transform 0.2s ease,
-                background 0.2s ease;
+            transition: transform 0.2s ease, background 0.2s ease;
         }
 
         .button:hover {
@@ -620,14 +494,10 @@
 
         .empty {
             padding: 60px 20px;
-
             text-align: center;
-
             border: 1px dashed #dfe0e7;
             border-radius: 20px;
-
             color: var(--muted);
-
             background: rgba(255, 255, 255, 0.5);
         }
 
@@ -636,7 +506,6 @@
                 opacity: 0;
                 transform: translateY(18px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -648,7 +517,6 @@
                 opacity: 0;
                 transform: translateY(-8px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -659,9 +527,14 @@
             from {
                 transform: scaleX(0);
             }
-
             to {
                 transform: scaleX(1);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
             }
         }
 
@@ -712,7 +585,6 @@
 <body>
 
 <nav class="navbar">
-
     <div class="navbar-inner">
 
         <a class="logo" href="{% url 'vacancy_list' %}">
@@ -720,91 +592,49 @@
         </a>
 
         <div class="nav">
-
-            <a href="{% url 'about' %}">
-                О проекте
-            </a>
-
-            <a href="{% url 'profile' %}">
-                Профиль
-            </a>
+            <a href="{% url 'about' %}">О проекте</a>
+            <a href="{% url 'profile' %}">Профиль</a>
 
             {% if user.is_authenticated %}
-
-                <span class="username">
-                    {{ user.username }}
-                </span>
-
-                <a href="{% url 'logout' %}">
-                    Выйти
-                </a>
-
+                <span class="username">{{ user.username }}</span>
+                <a href="{% url 'logout' %}">Выйти</a>
             {% else %}
-
-                <a href="{% url 'login' %}">
-                    Войти
-                </a>
-
-                <a href="{% url 'register' %}">
-                    Регистрация
-                </a>
-
+                <a href="{% url 'login' %}">Войти</a>
+                <a href="{% url 'register' %}">Регистрация</a>
             {% endif %}
-
         </div>
 
     </div>
-
 </nav>
 
 <main class="page">
 
     <section class="hero">
-
         <div>
-
-            <div class="eyebrow">
-                AI-подбор
-            </div>
-
-            <h1>
-                Вакансии
-            </h1>
-
+            <div class="eyebrow">AI-подбор</div>
+            <h1>Вакансии</h1>
             <div class="count">
                 Найдено подходящих вакансий: {{ vacancies|length }}
             </div>
-
         </div>
 
-        <a
-            class="update-button"
-            href="{% url 'update_vacancies' %}"
-        >
+        <a class="update-button" href="{% url 'update_vacancies' %}">
             ↻ Обновить вакансии
         </a>
-
     </section>
 
     {% if updated %}
-
         <div class="success">
             <span>✓</span>
             <span>Вакансии успешно обновлены и проанализированы AI.</span>
         </div>
-
     {% endif %}
 
-    <form method="get" class="filters">
-
+    <form method="get" class="filters" id="search-form">
         <div class="filters-row">
 
             <div class="filter-group">
-
-                <label for="min_salary">
-                    Минимальная зарплата
-                </label>
-
+                <label for="min_salary">Минимальная зарплата</label>
                 <input
                     type="number"
                     id="min_salary"
@@ -812,15 +642,10 @@
                     value="{{ min_salary }}"
                     placeholder="Например, 150000"
                 >
-
             </div>
 
             <div class="filter-group">
-
-                <label for="skill">
-                    Навыки
-                </label>
-
+                <label for="skill">Навыки</label>
                 <input
                     type="text"
                     id="skill"
@@ -828,34 +653,36 @@
                     value="{{ skill }}"
                     placeholder="Python, Django, PostgreSQL"
                 >
-
             </div>
 
-            <button
-                class="filter-button"
-                type="submit"
-            >
-                Найти
+            <button class="filter-button" id="search-button" type="submit">
+                Найти вакансии
             </button>
 
-            <a
-                class="reset-button"
-                href="{% url 'vacancy_list' %}"
-            >
+            <a class="reset-button" href="{% url 'vacancy_list' %}">
                 Сбросить
             </a>
 
         </div>
-
     </form>
+
+    <div class="search-status" id="search-status" role="status" aria-live="polite">
+        <div class="search-spinner"></div>
+        <div>
+            <div class="search-status-text" id="search-status-text">
+                Ищем подходящие вакансии...
+            </div>
+            <div class="search-status-subtext">
+                Применяем фильтры и подбираем результаты. Пожалуйста, подождите.
+            </div>
+        </div>
+    </div>
 
     {% for vacancy in vacancies %}
 
         <article class="vacancy">
 
-            <h2>
-                {{ vacancy.title }}
-            </h2>
+            <h2>{{ vacancy.title }}</h2>
 
             <div class="company">
                 {{ vacancy.company }}
@@ -864,41 +691,19 @@
             <div class="salary">
 
                 {% if vacancy.salary_from and vacancy.salary_to %}
-
-                    {{ vacancy.salary_from_display }}
-                    —
-                    {{ vacancy.salary_to_display }}
-
-                    {% if vacancy.currency == "RUR" %}
-                        ₽
-                    {% else %}
-                        {{ vacancy.currency }}
-                    {% endif %}
+                    {{ vacancy.salary_from_display }} — {{ vacancy.salary_to_display }}
+                    {% if vacancy.currency == "RUR" %}₽{% else %}{{ vacancy.currency }}{% endif %}
 
                 {% elif vacancy.salary_from %}
-
                     от {{ vacancy.salary_from_display }}
-
-                    {% if vacancy.currency == "RUR" %}
-                        ₽
-                    {% else %}
-                        {{ vacancy.currency }}
-                    {% endif %}
+                    {% if vacancy.currency == "RUR" %}₽{% else %}{{ vacancy.currency }}{% endif %}
 
                 {% elif vacancy.salary_to %}
-
                     до {{ vacancy.salary_to_display }}
-
-                    {% if vacancy.currency == "RUR" %}
-                        ₽
-                    {% else %}
-                        {{ vacancy.currency }}
-                    {% endif %}
+                    {% if vacancy.currency == "RUR" %}₽{% else %}{{ vacancy.currency }}{% endif %}
 
                 {% else %}
-
                     Зарплата не указана
-
                 {% endif %}
 
             </div>
@@ -906,33 +711,23 @@
             <div class="info-row">
 
                 {% if vacancy.city %}
-                    <div class="info-item">
-                        📍 {{ vacancy.city }}
-                    </div>
+                    <div class="info-item">📍 {{ vacancy.city }}</div>
                 {% endif %}
 
                 {% if vacancy.experience %}
-                    <div class="info-item">
-                        Опыт: {{ vacancy.experience }}
-                    </div>
+                    <div class="info-item">Опыт: {{ vacancy.experience }}</div>
                 {% endif %}
 
                 {% if vacancy.employment %}
-                    <div class="info-item">
-                        {{ vacancy.employment }}
-                    </div>
+                    <div class="info-item">{{ vacancy.employment }}</div>
                 {% endif %}
 
                 {% if vacancy.schedule %}
-                    <div class="info-item">
-                        {{ vacancy.schedule }}
-                    </div>
+                    <div class="info-item">{{ vacancy.schedule }}</div>
                 {% endif %}
 
                 {% if vacancy.work_format %}
-                    <div class="info-item">
-                        {{ vacancy.work_format }}
-                    </div>
+                    <div class="info-item">{{ vacancy.work_format }}</div>
                 {% endif %}
 
             </div>
@@ -940,111 +735,56 @@
             <div class="match">
 
                 <div class="match-header">
-
-                    <span class="match-title">
-                        Соответствие профилю
-                    </span>
-
-                    <span class="match-score">
-                        {{ vacancy.match_score }}%
-                    </span>
-
+                    <span class="match-title">Соответствие профилю</span>
+                    <span class="match-score">{{ vacancy.match_score }}%</span>
                 </div>
 
                 <div class="match-bar">
-
                     <div
                         class="match-progress"
                         style="width: {{ vacancy.match_score }}%;"
                     ></div>
-
                 </div>
 
                 <div class="match-details">
 
                     {% if vacancy.matched_skills %}
-
                         <div class="match-detail">
-
-                            <strong>
-                                Подходит
-                            </strong>
-
-                            <span>
-                                {{ vacancy.matched_skills }}
-                            </span>
-
+                            <strong>Подходит</strong>
+                            <span>{{ vacancy.matched_skills }}</span>
                         </div>
-
                     {% endif %}
 
                     {% if vacancy.missing_skills %}
-
                         <div class="match-detail">
-
-                            <strong>
-                                Не хватает
-                            </strong>
-
-                            <span>
-                                {{ vacancy.missing_skills }}
-                            </span>
-
+                            <strong>Не хватает</strong>
+                            <span>{{ vacancy.missing_skills }}</span>
                         </div>
-
                     {% endif %}
 
                 </div>
 
                 {% if vacancy.match_reason %}
-
-                    <div
-                        class="match-detail"
-                        style="margin-top: 10px;"
-                    >
-
-                        <strong>
-                            Почему подходит
-                        </strong>
-
-                        <span>
-                            {{ vacancy.match_reason }}
-                        </span>
-
+                    <div class="match-detail" style="margin-top: 10px;">
+                        <strong>Почему подходит</strong>
+                        <span>{{ vacancy.match_reason }}</span>
                     </div>
-
                 {% endif %}
 
             </div>
 
             {% if vacancy.skills_list %}
-
                 <div class="skills">
-
-                    <div class="section-title">
-                        Навыки вакансии
-                    </div>
-
+                    <div class="section-title">Навыки вакансии</div>
                     <div class="skill-list">
-
                         {% for skill_item in vacancy.skills_list %}
-
-                            <span class="skill">
-                                {{ skill_item }}
-                            </span>
-
+                            <span class="skill">{{ skill_item }}</span>
                         {% endfor %}
-
                     </div>
-
                 </div>
-
             {% endif %}
 
-            <a
-                class="button"
-                href="{% url 'vacancy_detail' vacancy.id %}"
-            >
+            <a class="button" href="{% url 'vacancy_detail' vacancy.id %}">
                 Подробнее →
             </a>
 
@@ -1053,21 +793,46 @@
     {% empty %}
 
         <div class="empty">
-
-            <strong>
-                Подходящих вакансий пока нет
-            </strong>
-
+            <strong>Подходящих вакансий пока нет</strong>
             <p>
-                Попробуйте обновить вакансии или изменить
-                настройки профиля.
+                Попробуйте обновить вакансии или изменить настройки профиля.
             </p>
-
         </div>
 
     {% endfor %}
 
 </main>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("search-form");
+    const button = document.getElementById("search-button");
+    const status = document.getElementById("search-status");
+    const statusText = document.getElementById("search-status-text");
+
+    if (!form || !button || !status || !statusText) {
+        return;
+    }
+
+    form.addEventListener("submit", function (event) {
+        if (!form.reportValidity()) {
+            event.preventDefault();
+            return;
+        }
+
+        status.classList.add("visible");
+        button.disabled = true;
+        button.textContent = "Ищем...";
+
+        statusText.textContent = "Ищем подходящие вакансии...";
+
+        status.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    });
+});
+</script>
 
 </body>
 </html>

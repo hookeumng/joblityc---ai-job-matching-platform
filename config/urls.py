@@ -1,8 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.shortcuts import redirect
 from django.urls import include, path
 
 urlpatterns = [
+    path("", lambda request: redirect("/vacancies/"), name="home"),
     path("admin/", admin.site.urls),
 
     path(
@@ -17,4 +19,5 @@ urlpatterns = [
         "vacancies/",
         include("vacancies.urls"),
     ),
+    path("accounts/login/", lambda request: redirect("/vacancies/")),
 ]
